@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Character } from "../types/character";
+import Catalog from "../components/Catalog";
 
 
 const API_BASE_URL = "https://rickandmortyapi.com/api";
@@ -23,16 +24,10 @@ export default function RickAndMorty() {
     }, []);
 
     return (
-        <div>
-            <h1> oooohhh weeeeeeee</h1>
-        
-            {characters.map((character) => (
-                <div key={character.id}>
-                    <Image src={character.image} alt={character.name} width={200} height={200} />
-                    <p>{character.name}</p>
-                </div>
-            ))}
-        </div>
+        <main className="p-8 bg-zinc-950 min-h-screen">
+            <h1 className="text-3xl text-white mb-6">Mr. PoopyButtHole Archive</h1>
+            <Catalog characters={characters} />
+        </main>
     );
     
 }
