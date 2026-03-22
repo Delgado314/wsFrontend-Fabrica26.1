@@ -63,7 +63,7 @@ export default function Catalog() {
 
                     <div className="flex flex-col items-center">
                         <span className="text-zinc-500 text-[10px] uppercase tracking-widest font-bold">Página</span>
-                        <span className="text-white text-xl font-mono font-bold">{currentPage}</span>
+                        <span className="text-black text-xl font-mono font-bold">{currentPage}</span>
                     </div>
 
                     <button

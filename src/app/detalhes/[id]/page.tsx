@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
-import { ArrowLeft, MapPin, Globe, Film, UserCircle, Activity, Box } from "lucide-react";
+import { ArrowLeft, MapPin, Globe, Film, UserCircle } from "lucide-react";
 import { getCharacterById } from "../../services/RickAndMorty";
 import { Character } from "../../types/character";
 
@@ -28,7 +28,7 @@ export default function CharacterDetailsPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-black flex items-center justify-center">
+            <div className="flex min-h-[50vh] items-center justify-center bg-black">
                 <div className="text-green-500 animate-bounce font-mono">Carregando dados</div>
             </div>
         );
@@ -36,7 +36,7 @@ export default function CharacterDetailsPage() {
 
     if (!character) {
         return (
-            <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center gap-4">
+            <div className="flex min-h-[50vh] flex-col items-center justify-center gap-4 bg-black text-white">
                 <h1 className="text-2xl font-bold">Personagem não encontrado!</h1>
                 <button onClick={() => router.back()} className="text-green-500 underline">Voltar</button>
             </div>
@@ -44,7 +44,7 @@ export default function CharacterDetailsPage() {
     }
 
     return (
-        <main className="min-h-screen bg-black text-white p-6 md:p-12 lg:p-20">
+        <div className="bg-black px-4 py-8 text-white sm:px-6 md:px-12 md:py-12 lg:px-20 lg:py-16">
             {/* Cabeçalho de Navegação */}
             <div className="max-w-6xl mx-auto mb-12">
                 <button 
@@ -82,7 +82,7 @@ export default function CharacterDetailsPage() {
                     </div>
                 </div>
             </div>
-        </main>
+        </div>
     );
 }
 
