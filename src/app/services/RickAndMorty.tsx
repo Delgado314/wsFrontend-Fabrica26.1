@@ -1,33 +1,41 @@
-'use client';
-
-import Image from "next/image";
-import { useState, useEffect } from "react";
 import { Character } from "../types/character";
-import Catalog from "../components/Catalog";
+import { useState, useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 
 
 const API_BASE_URL = "https://rickandmortyapi.com/api";
 
-export default function RickAndMorty() {
+export function RickAndMorty() {
+
+    const router = useRouter();
+    const searchParams = useSearchParams();
 
     const [characters, setCharacters] = useState<Character[]>([]);
+    const currentPage = Number(searchParams.get("page")) || 1;
+    const [info, setInfo] = useState({ next: null, prev: null});
+    //const [loading, setLoading] = useState(true);
 
-    async function fetchCharacters() {
-        const response = await fetch(`${API_BASE_URL}/character`);
+    async function fetchCharacters(page: number) {
+        const response = await fetch(`${API_BASE_URL}/character?page=${page}`);
         const data = await response.json();     
         setCharacters(data.results);
-        console.log(data.results);
+        setInfo(data.info);
     }
 
     useEffect(() => {
-        fetchCharacters();
-    }, []);
+        fetchCharacters(currentPage);
+    }, [currentPage]);
 
-    return (
-        <main className="p-8 bg-zinc-950 min-h-screen">
-            <h1 className="text-3xl text-white mb-6">Mr. PoopyButtHole Archive</h1>
-            <Catalog characters={characters} />
-        </main>
-    );
+    const goToPage = (newPage: number) => {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set("page", newPage.toString());
+        router.push(`?${params.toString()}`);
+    };
+
+    return {
+        characters, currentPage, hasNextPage: !!info.next, hasPrevPage: !!info.prev, goToPage
+    };
+
+    
     
 }
