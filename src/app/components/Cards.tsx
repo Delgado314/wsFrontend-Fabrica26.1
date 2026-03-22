@@ -10,8 +10,7 @@ export default function Cards({ character }: CardsProps){
             <img src={character.image} alt={character.name} className="w-full rounded-lg mb-3" />
             <h2 className="text-lg font-bold">{character.name}</h2>
             <p className="text-sm text-gray-500">
-                {character.status} <br></br>
-                {character.species}
+                {character.status} <br></br>{character.species}
             </p>
         </div>
     );
