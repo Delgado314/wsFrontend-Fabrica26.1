@@ -5,21 +5,31 @@ import { Character } from "../types/character";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Cards from "./Cards";
 import Search from "./Search";
+import { CircularProgress } from "@mui/material";
 
 
 export default function Catalog() {
 
-    const { characters, currentPage, hasNextPage, hasPrevPage, goToPage, characterSearch, searchCharacter } = RickAndMorty();
+    const { characters, currentPage, hasNextPage, hasPrevPage, goToPage, characterSearch, searchCharacter, loading } = RickAndMorty();
 
     return (
         <section className="flex flex-col items-center gap-7">
             <Search onSearch={characterSearch} initialValue={searchCharacter} />
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7">
-                {characters.map((character) => (
-                    <Cards key={character.id} character={character} />
-                ))}
-            </div>
-            
+            {loading? (
+                <div className="flex justify-center items-center min-h-100">
+                    <CircularProgress color="inherit" className="text-green-500" />
+                </div>
+            ) : characters.length > 0? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7">
+                    {characters.map((character) => (
+                        <Cards key={character.id} character={character} />
+                    ))}
+                </div>
+            ):(
+                <div className="text-center py-20">
+                    <p className="text-zinc-500 text-xl font-medium">Acho que você se enganou no nome...</p>
+                </div> 
+            )}
             {characters.length > 0 && (
                 <div className="flex justify-center items-center gap-7 mt-4 pb-10">
                     <button

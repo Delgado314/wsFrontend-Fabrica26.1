@@ -1,5 +1,5 @@
 import { Character } from "../types/character";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
 
@@ -14,16 +14,24 @@ export function RickAndMorty(){
     const currentPage = Number(searchParams.get("page")) || 1;
     const searchCharacter = searchParams.get("name") || "";
     const [info, setInfo] = useState({ next: null, prev: null, count: 0 });
+    const [loading, setLoading] = useState(true);
 
     async function fetchCharacters(page: number, name: string){
-        const response = await fetch(`${API_BASE_URL}/character?page=${page}&name=${name}`);
-        const data = await response.json();     
-        if (data.error) {
-            setCharacters([]);
-            setInfo({ next: null, prev: null, count: 0 });
-        } else {
-            setCharacters(data.results);
-            setInfo(data.info);
+        setLoading(true);
+        try{
+            const response = await fetch(`${API_BASE_URL}/character?page=${page}&name=${name}`);
+            const data = await response.json();     
+            if (data.error) {
+                setCharacters([]);
+                setInfo({ next: null, prev: null, count: 0 });
+            }else{
+                setCharacters(data.results);
+                setInfo(data.info);
+            }
+        }catch(error){
+            console.error("Erro na busca de personagens, aguarde: ", error)
+        }finally{
+            setLoading(false);
         }
     }
 
@@ -50,7 +58,7 @@ export function RickAndMorty(){
     };
 
     return {
-        characters, currentPage, hasNextPage: !!info.next, hasPrevPage: !!info.prev, goToPage, searchCharacter, characterSearch
+        characters, currentPage, hasNextPage: !!info.next, hasPrevPage: !!info.prev, goToPage, searchCharacter, characterSearch, loading
     };
 
     
