@@ -18,11 +18,10 @@ export default function Search({ onSearch, initialValue }: searchProps){
 
     return (
         <form onSubmit={handleSearch} className="relative w-full max-w-md mb-7 group">
-            <input
-            type="charName" value={charName}
-            onChange={(e) => setCharName(e.target.value)}
-            placeholder="Digite o nome do personagem"
-            className="w-full bg-zinc-900 border border-zinc-700 text-white rounded-full py-3 px-6 pl-12 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20"
+            <input type="text" value={charName}
+                onChange={(e) => setCharName(e.target.value)}
+                placeholder="Digite o nome do personagem"
+                className="w-full bg-zinc-900 border border-zinc-700 text-white rounded-full py-3 px-6 pl-12 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20"
             />
 
             <SearchIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-zinc-500 group-focus-within:text-green-500" />

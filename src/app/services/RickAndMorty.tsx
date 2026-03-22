@@ -64,3 +64,14 @@ export function RickAndMorty(){
     
     
 }
+
+
+export async function getCharacterById(id: string): Promise<Character | null> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/character/${id}`); 
+    return (await response.json()) as Character;
+  } catch (error) {
+    console.error("Erro ao buscar personagem:", error);
+    return null;
+  }
+}
